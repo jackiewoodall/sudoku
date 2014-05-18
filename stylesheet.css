@@ -1,0 +1,20 @@
+select {
+    background-color: yellow;
+}
+
+tr, td {
+    vertical-align:top;
+    border:1px dashed green;
+}
+
+table {
+    border:1px solid red;
+    border-spacing: 0px;
+}
+
+button {
+}
+
+input {
+    max-width:100%;
+}
