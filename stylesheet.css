@@ -1,20 +1,20 @@
 select {
-    background-color: yellow;
+    background-color: white;
 }
 
 tr, td {
-    vertical-align:top;
-    border:1px dashed green;
+    vertical-align:center;
+/*    border:1px dashed green; */
 }
 
 table {
-    border:1px solid red;
+    border:1px solid black;
     border-spacing: 0px;
 }
 
 button {
 }
 
-input {
-    max-width:100%;
+textarea {
+    font-family:"Courier New";
 }

@@ -42,10 +42,13 @@ function load(input){ // input = string of 81 characters representing the puzzle
   }
   
   var p = new Puzzle(puzzle);
-  var start = Date.now();
-  solve(p);
-  var end = Date.now();
-  console.log("time (ms)= " + (end - start));
+  
+  return p;
+  
+  //var start = Date.now();
+  //solve(p);
+  //var end = Date.now();
+  //console.log("time (ms)= " + (end - start));
 }
 //////////////////////////////////////////////////////////////////////////////
 function printPuzzle(puzzle,pretty){
@@ -72,6 +75,10 @@ function SSet() {
 
 SSet.prototype.set = function(index) {
   this.n[index-1] = 1;
+}
+
+SSet.prototype.unset = function(index) {
+  this.n[index-1] = 0;
 }
 
 SSet.prototype.get = function(index) {
@@ -116,6 +123,13 @@ function Puzzle(p) {
     this.cols[c].set(v);
     this.grid[3*Math.floor(r/3) + Math.floor(c/3)].set(v);
   }
+  
+  this.unset = function(r,c,v) {
+    this.puzzle[r][c] = 0;
+    this.rows[r].unset(v);
+    this.cols[c].unset(v);
+    this.grid[3*Math.floor(r/3) + Math.floor(c/3)].unset(v);
+  }
 
   for(var r=0;r<9;r++) {
     for(var c=0;c<9;c++) {
@@ -144,6 +158,18 @@ Puzzle.prototype.print = function(pretty) {
   for(var i = 0; i<9;i++) this.cols[i].print();
   console.log("Grid:");
   for(var i = 0; i<9;i++) this.grid[i].print();
+}
+
+Puzzle.prototype.dump = function() {
+  var s = "";
+  for(var r=0; r<this.puzzle.length; r++){
+      for(var c=0;c<this.puzzle[r].length;c++){
+        var char = parseInt(this.puzzle[r][c]);
+        char = (isNaN(char) || char < 1 || char > 9) ? '.' : char;
+        s += char;
+      }
+  }
+  return s;
 }
 
 Puzzle.prototype.get = function(r,c) {
@@ -262,11 +288,11 @@ testInput2 = "1\n\
 */
 
 //consume(testInput0);
-var testSeries = {
-testSeries0 : "4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......",
-testSeries1 : "003020600900305001001806400008102900700000008006708200002609500800203009005010300",
-testSeries2 : ".47.2....8....1....3....9.2.....5...6..81..5.....4.....7....3.4...9...1.4..27.8..",
-testSeries3 : ".....6....59.....82....8....45........3........6..3.54...325..6..................", // very hard 305.481 sec
-}
+var testSeries = [
+"4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......",
+"003020600900305001001806400008102900700000008006708200002609500800203009005010300",
+".47.2....8....1....3....9.2.....5...6..81..5.....4.....7....3.4...9...1.4..27.8..",
+//testSeries3 : ".....6....59.....82....8....45........3........6..3.54...325..6..................", // very hard 305.481 sec
+];
 
-//load(testSeries.testSeries0);
+//load(testSeries.0);
