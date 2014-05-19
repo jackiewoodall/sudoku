@@ -3,9 +3,6 @@ var _puzzleInitial = null;
 
 $(document).ready(function() {
 
-    // initialize the board's HTML
-    $("select").html( GenerateOptionHTML );
-
     // register event handlers
     $("select").change( function() { OnSelectChange(this); });
     
@@ -19,7 +16,7 @@ $(document).ready(function() {
 
     $("#btnDump").click(function() { OnDumpClick(this); })
     
-    // load a start puzzle
+    // initialize board html & load a start puzzle
     OnNewClick(this);
 });
 
