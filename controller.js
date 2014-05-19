@@ -57,8 +57,7 @@ function OnClearClick(element) {
     
     var r=confirm("Clear the board! Are you sure?");
     if (r==true) {
-        $("select").html( GenerateOptionHTML );
-        $("select").prop( "disabled", false);
+	Loadpuzzle("");
     }
 }
 
