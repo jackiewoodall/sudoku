@@ -1,33 +1,4 @@
 //////////////////////////////////////////////////////////////////////////////
-_input = "";
-
-if(typeof process !== "undefined") {
-  process.stdin.on('readable', function(chunk) {
-    _input += process.stdin.read();;
-  });
-
-  process.stdin.on('end', function() {
-      consume(_input);
-  });
-}
-/////////////////////////////////////////////////////////////////////////////
-function consume(input){
-    lines = input.split('\n');
-    T = +(lines.shift());
-    while(T--) {
-        puzzle = new Array(9);
-        for(index=0;index<9;index++) {
-            puzzle[index] = lines.shift().split(' ');
-        }
-
-        var p = new Puzzle(puzzle);
-        var start = Date.now();
-        solve(p);
-        var end = Date.now();
-        console.log("time (ms)= " + (end - start));
-    }
-}
-//////////////////////////////////////////////////////////////////////////////
 function load(input){ // input = string of 81 characters representing the puzzle (row major)
   var puzzle = new Array(9);
   var caret = 0;
@@ -44,11 +15,6 @@ function load(input){ // input = string of 81 characters representing the puzzle
   var p = new Puzzle(puzzle);
   
   return p;
-  
-  //var start = Date.now();
-  //solve(p);
-  //var end = Date.now();
-  //console.log("time (ms)= " + (end - start));
 }
 //////////////////////////////////////////////////////////////////////////////
 function printPuzzle(puzzle,pretty){
@@ -144,9 +110,7 @@ function Puzzle(p) {
 Puzzle.prototype.clone = function() {
   return new Puzzle(this.puzzle);
 }
-// 0 1 2
-// 3 4 5
-// 6 7 8
+
 Puzzle.prototype.print = function(pretty) {
   printPuzzle(this.puzzle,pretty)
   
@@ -175,6 +139,7 @@ Puzzle.prototype.dump = function() {
 Puzzle.prototype.get = function(r,c) {
   return this.puzzle[r][c];
 }
+
 // return a list of candidates
 Puzzle.prototype.candidates = function(r,c) {
   var v = [];
@@ -228,66 +193,6 @@ function solve(puzzle){
 
     return false;
 }
-//////////////////////////////////////////////////////////////////////////////
-// World's hardest sudoku: Can you solve Dr Arto Inkala's puzzle?
-// http://www.mirror.co.uk/news/weird-news/worlds-hardest-sudoku-can-you-242294
-testInput0 = "1\n\
-0 0 5 3 0 0 0 0 0\n\
-8 0 0 0 0 0 0 2 0\n\
-0 7 0 0 1 0 5 0 0\n\
-4 0 0 0 0 5 3 0 0\n\
-0 1 0 0 7 0 0 0 6\n\
-0 0 3 2 0 0 0 8 0\n\
-0 6 0 5 0 0 0 0 9\n\
-0 0 4 0 0 0 0 3 0\n\
-0 0 0 0 0 9 7 0 0"
-
-testInput1 = "2\n\
-0 0 0 0 0 0 0 0 0\n\
-0 0 8 0 0 0 0 4 0\n\
-0 0 0 0 0 0 0 0 0\n\
-0 0 0 0 0 6 0 0 0\n\
-0 0 0 0 0 0 0 0 0\n\
-0 0 0 0 0 0 0 0 0\n\
-2 0 0 0 0 0 0 0 0\n\
-0 0 0 0 0 0 2 0 0\n\
-0 0 0 0 0 0 0 0 0\n\
-0 0 0 0 0 0 0 0 0\n\
-0 0 8 0 0 0 0 4 0\n\
-0 0 0 0 0 0 0 0 0\n\
-0 0 0 0 0 6 0 0 0\n\
-0 0 0 0 0 0 0 0 0\n\
-0 0 0 0 0 0 0 0 0\n\
-2 0 0 0 0 0 0 0 0\n\
-0 0 0 0 0 0 2 0 0\n\
-0 0 0 0 0 0 0 0 0"
-
-testInput2 = "1\n\
-0 0 0 0 0 5 0 8 0\n\
-0 0 0 6 0 1 0 4 3\n\
-0 0 0 0 0 0 0 0 0\n\
-0 1 0 5 0 0 0 0 0\n\
-0 0 0 1 0 6 0 0 0\n\
-3 0 0 0 0 0 0 0 5\n\
-5 3 0 0 0 0 0 6 1\n\
-0 0 0 0 0 0 0 0 4\n\
-0 0 0 0 0 0 0 0 0";
-
-/*
-. . . |. . 5 |. 8 . 
-. . . |6 . 1 |. 4 3 
-. . . |. . . |. . . 
-------+------+------
-. 1 . |5 . . |. . . 
-. . . |1 . 6 |. . . 
-3 . . |. . . |. . 5 
-------+------+------
-5 3 . |. . . |. 6 1 
-. . . |. . . |. . 4 
-. . . |. . . |. . .
-*/
-
-//consume(testInput0);
 var testSeries = [
     "4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......",
     "003020600900305001001806400008102900700000008006708200002609500800203009005010300",
@@ -297,5 +202,3 @@ var testSeries = [
     ".59.....6.8..693.41..84.95..9...51..5.7.8.6.9..17...4..26.54..39.567..2.3.....56.", // bronze
     "....3.6.43..7.9.1.9.2.6...7..46...2.8...7...6.3...29..1...9.2.8.7.5.8..32.3.4...."  // silver
 ];
-
-//load(testSeries.0);
